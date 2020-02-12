@@ -1,4 +1,4 @@
-eval_sinewave_for_test
+
 
 def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10), lr=0.01, plot=True):
     '''Evaluates how the sinewave addapts at dataset.

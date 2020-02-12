@@ -1,4 +1,4 @@
-copy_model
+
 def copy_model(model, x):
     '''Copy model weights to a new model.
     

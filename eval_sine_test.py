@@ -1,4 +1,4 @@
-eval_sine_test
+
 
 def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10)):
     '''Evaluate how the model fits to the curve training for `fits` steps.

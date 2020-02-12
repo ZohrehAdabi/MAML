@@ -1,4 +1,4 @@
-model
+from tensorflow import keras
 
 class SineModel(keras.Model):
     def __init__(self):

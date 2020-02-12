@@ -1,4 +1,4 @@
-compare_maml_and_neural_net
+
 def compare_maml_and_neural_net(maml, neural_net, sinusoid_generator, num_steps=list(range(10)),
                                 intermediate_plot=True, marker='x', linestyle='--'):
     '''Compare the loss of a MAML model and a neural net.

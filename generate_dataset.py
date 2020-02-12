@@ -1,4 +1,4 @@
-generate_dataset
+
 def generate_dataset(K, train_size=20000, test_size=10):
     '''Generate train and test dataset.
     

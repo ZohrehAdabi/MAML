@@ -1,4 +1,4 @@
-load_model_weight
+
 def load_model_weight(model_calss, path, x):
     model = model_calss
     model.load_weights(path)

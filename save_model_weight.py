@@ -1,4 +1,4 @@
-save_model_weight
+
 def save_model_weight(model, path):
     model.save_weights(path, save_format='tf')
 

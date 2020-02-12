@@ -1,4 +1,4 @@
-plot_model_comparison_to_average
+
 def plot_model_comparison_to_average(model, ds, model_name='neural network', K=10):
     '''Compare model to average.
     

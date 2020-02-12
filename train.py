@@ -1,4 +1,5 @@
-train
+from tensorflow import keras
+
 def loss_function(pred_y, y):
   return keras_backend.mean(keras.losses.mean_squared_error(y, pred_y))
 

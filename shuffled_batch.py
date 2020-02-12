@@ -1,4 +1,4 @@
-shuffled_batch
+
 def shuffled_batch(train_ds, num_batches=20000, batch_size=10):
     x_train,y_train =np.array([]), np.array([])
     for i, sinusoid_generator in enumerate(train_ds):

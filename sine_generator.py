@@ -1,4 +1,4 @@
-sine_generator
+
 class SinusoidGenerator():
     '''
         Sinusoid Generator.
