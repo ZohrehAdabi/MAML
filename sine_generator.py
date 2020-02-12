@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as  plt
+# plt.style.use(['dark_background'])
 
 class SinusoidGenerator():
     '''
@@ -58,12 +61,22 @@ class SinusoidGenerator():
         return self.batch(x=np.linspace(-5, 5, K))
         
         
-def plot(data,color, *args, **kwargs):
-    '''Plot helper.'''
-    x, y = data.batch()
-    ax.plot(x, y,'^', color=color)
-    x, y = data.equally_spaced_samples(100)
-    return ax.plot(x, y, color=color)
+    def plot_sine(self, sine_generator, *args, **kwargs):
+        '''Plot helper.'''
+        fig = plt.figure(figsize=(6,4), dpi=100)
+        ax = fig.add_subplot(111)
+        ax.set_title('Sinusoid examples')
+        colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen'}
+        for i in range(3):
+            data = sine_generator(K=10)
+            x, y = data.batch()
+            ax.plot(x, y,'^', color=colors[i])
+            x, y = data.equally_spaced_samples(100)
+            ax.plot(x, y, color=colors[i])
+        
+        
+        
+
 
 # fig = plt.figure(figsize=(6,4), dpi=100)
 # ax = fig.add_subplot(111)
