@@ -1,4 +1,15 @@
 
+import tensorflow as tf
+from tensorflow import keras
+import tensorflow.keras.backend as keras_backend
+import numpy as np
+
+from sine_generator import SinusoidGenerator 
+
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background'])
+import matplotlib as mpl
+colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen'}
 def plot_model_comparison_to_average(model, ds, model_name='neural network', K=10):
     '''Compare model to average.
     
