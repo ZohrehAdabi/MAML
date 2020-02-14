@@ -46,7 +46,7 @@ def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10),
     optimizer = keras.optimizers.SGD(learning_rate=lr)
     
     # run training and log fit results
-    fit_res, w3_copied_model = eval_sine_test(copied_model, optimizer, x, y, x_test, y_test, num_steps)
+    fit_res, w3_copied_model, weight_gradient = eval_sine_test(copied_model, optimizer, x, y, x_test, y_test, num_steps)
     
     # plot
     fig = plt.figure(figsize=(12, 5), tight_layout=True)
@@ -67,4 +67,4 @@ def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10),
     if plot:
         plt.show()
     
-    return fit_res, w3_copied_model
+    return fit_res, w3_copied_model, weight_gradient

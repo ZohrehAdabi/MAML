@@ -34,7 +34,7 @@ def train_batch(x, y, model, optimizer):
     tensor_x, tensor_y = np_to_tensor((x, y))
     gradients, loss = compute_gradients(model, tensor_x, tensor_y)
     apply_gradients(optimizer, gradients, model.trainable_variables)
-    return loss
+    return loss, gradients
 
 def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10)):
     '''Evaluate how the model fits to the curve training for `fits` steps.
@@ -58,9 +58,9 @@ def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10))
         loss, logits = compute_loss(model, tensor_x_test, tensor_y_test)
         fit_res.append((0, logits, loss))
         w3_copied_model.append(model.out.get_weights()[0])
-       
+    weight_gradient = {}  
     for step in range(1, np.max(num_steps) + 1):
-        train_batch(x, y, model, optimizer)
+        _, gradients = train_batch(x, y, model, optimizer)
         loss, logits = compute_loss(model, tensor_x_test, tensor_y_test)
         if step in num_steps:
             fit_res.append(
@@ -71,5 +71,6 @@ def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10))
                 )
             )
             w3_copied_model.append(model.out.get_weights()[0])
-    return fit_res, w3_copied_model
+            weight_gradient[f'step{step}'] = gradients
+    return fit_res, w3_copied_model, weight_gradient
 
