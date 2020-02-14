@@ -1,4 +1,15 @@
+import tensorflow as tf
 from tensorflow import keras
+import tensorflow.keras.backend as keras_backend
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background'])
+import matplotlib as mpl
+import time
+device_name = tf.test.gpu_device_name()
+np.random.seed(333)
+
+from shuffled_batch import shuffled_batch
 
 def loss_function(pred_y, y):
   return keras_backend.mean(keras.losses.mean_squared_error(y, pred_y))
@@ -30,8 +41,8 @@ def train_batch(x, y, model, optimizer):
     return loss
 
 
-def train_model(dataset, epochs=1, lr=0.01, log_steps=1000):
-    model = SineModel()
+def train_model(model, dataset, epochs=1, lr=0.01, log_steps=1000):
+    # model = SineModel()
     optimizer = keras.optimizers.Adam(learning_rate=lr)
     for epoch in range(epochs):
         losses = []
@@ -58,15 +69,15 @@ def train_model(dataset, epochs=1, lr=0.01, log_steps=1000):
         # print(losses)
     return model
 
-def train_model_shuffled(dataset, epochs=1, lr=0.01, log_steps=1000):
-    model = SineModel()
+def train_model_shuffled(model, dataset, epochs=1, lr=0.01, log_steps=1000):
+    # model = SineModel()
     optimizer = keras.optimizers.Adam(learning_rate=lr)
     for epoch in range(epochs):
         losses = []
         total_loss = 0
         start = time.time()
         i=0
-        for x, y in shuffled_batch(dataset, num_batches):
+        for x, y in shuffled_batch(dataset,  len(dataset)): #num_batches
             x=np.array(x, ndmin=2).T
             y=np.array(y, ndmin=2).T
             # print(type(x), x.shape)

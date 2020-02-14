@@ -73,11 +73,12 @@ class SinusoidGenerator():
             ax.plot(x, y,'^', color=colors[i])
             x, y = data.equally_spaced_samples(100)
             ax.plot(x, y, color=colors[i])
-    def plot(self, data, fig, color,*args, **kwargs):
+            
+    def plot(self, data, fig, title, color,*args, **kwargs):
         '''Plot helper.'''
         # fig = plt.figure(figsize=(6,4), dpi=100)
         ax = fig.add_subplot(111)
-        ax.set_title('Sinusoid examples')
+        ax.set_title(title)
         x, y = data.batch()
         ax.plot(x, y,'^', color=color)
         x, y = data.equally_spaced_samples(100)
