@@ -1,4 +1,15 @@
+from copy_model import copy_model
+from eval_sine_test import eval_sine_test
+from sine_generator import SinusoidGenerator 
 
+from tensorflow import keras
+
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background'])
+import matplotlib as mpl
+
+colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen'}
 
 def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10), lr=0.01, plot=True):
     '''Evaluates how the sinewave addapts at dataset.

@@ -1,4 +1,13 @@
 
+from eval_sinewave_for_test import eval_sinewave_for_test
+
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background'])
+import matplotlib as mpl
+
+colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen'}
+
 def compare_maml_and_neural_net(maml, neural_net, sinusoid_generator, num_steps=list(range(10)),
                                 intermediate_plot=True, marker='x', linestyle='--'):
     '''Compare the loss of a MAML model and a neural net.

@@ -1,4 +1,40 @@
+import tensorflow as tf
+from tensorflow import keras
+import tensorflow.keras.backend as keras_backend
+import numpy as np
 
+
+
+
+
+def loss_function(pred_y, y):
+  return keras_backend.mean(keras.losses.mean_squared_error(y, pred_y))
+
+def np_to_tensor(list_of_numpy_objs):
+    return (tf.convert_to_tensor(obj) for obj in list_of_numpy_objs)
+    
+
+def compute_loss(model, x, y, loss_fn=loss_function):
+    logits = model.call(x)
+    mse = loss_fn(y, logits)
+    return mse, logits
+
+
+def compute_gradients(model, x, y, loss_fn=loss_function):
+    with tf.GradientTape() as tape:
+        loss, _ = compute_loss(model, x, y, loss_fn)
+    return tape.gradient(loss, model.trainable_variables), loss
+
+
+def apply_gradients(optimizer, gradients, variables):
+    optimizer.apply_gradients(zip(gradients, variables))
+
+    
+def train_batch(x, y, model, optimizer):
+    tensor_x, tensor_y = np_to_tensor((x, y))
+    gradients, loss = compute_gradients(model, tensor_x, tensor_y)
+    apply_gradients(optimizer, gradients, model.trainable_variables)
+    return loss
 
 def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10)):
     '''Evaluate how the model fits to the curve training for `fits` steps.

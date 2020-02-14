@@ -1,3 +1,6 @@
+from model import SineModel
+
+import tensorflow as tf
 
 def copy_model(model, x):
     '''Copy model weights to a new model.

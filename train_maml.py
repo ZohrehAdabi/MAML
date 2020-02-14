@@ -1,4 +1,46 @@
+import tensorflow as tf
 from tensorflow import keras
+import tensorflow.keras.backend as keras_backend
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background'])
+import matplotlib as mpl
+import time
+import random
+device_name = tf.test.gpu_device_name()
+np.random.seed(333)
+
+from copy_model import copy_model
+
+def loss_function(pred_y, y):
+  return keras_backend.mean(keras.losses.mean_squared_error(y, pred_y))
+
+def np_to_tensor(list_of_numpy_objs):
+    return (tf.convert_to_tensor(obj) for obj in list_of_numpy_objs)
+    
+
+def compute_loss(model, x, y, loss_fn=loss_function):
+    logits = model.call(x)
+    mse = loss_fn(y, logits)
+    return mse, logits
+
+
+def compute_gradients(model, x, y, loss_fn=loss_function):
+    with tf.GradientTape() as tape:
+        loss, _ = compute_loss(model, x, y, loss_fn)
+    return tape.gradient(loss, model.trainable_variables), loss
+
+
+def apply_gradients(optimizer, gradients, variables):
+    optimizer.apply_gradients(zip(gradients, variables))
+
+    
+def train_batch(x, y, model, optimizer):
+    tensor_x, tensor_y = np_to_tensor((x, y))
+    gradients, loss = compute_gradients(model, tensor_x, tensor_y)
+    apply_gradients(optimizer, gradients, model.trainable_variables)
+    return loss
+
 
 def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=1000):
     '''Train using the MAML setup.
@@ -62,5 +104,6 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
             if i % log_steps == 0 and i > 0:
                 print('Step {}: loss = {}, Time to run {} steps = {}'.format(i, loss, log_steps, time.time() - start))
                 start = time.time()
-        plt.plot(losses)
+        # plt.plot(losses)
         plt.show()
+    return model
