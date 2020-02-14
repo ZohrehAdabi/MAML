@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 import tensorflow.keras.backend as keras_backend
+tf.keras.backend.set_floatx('float64')
 import numpy as np
 import matplotlib.pyplot as plt
 plt.style.use(['dark_background'])

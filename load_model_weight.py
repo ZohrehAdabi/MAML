@@ -1,7 +1,8 @@
-
+import tensorflow as tf
 def load_model_weight(model_calss, path, x):
     model = model_calss
     model.load_weights(path)
+    tf.convert_to_tensor(x)
     model.call(tf.convert_to_tensor(x))
     return model
 # sinusoid_generator = SinusoidGenerator(K=10)
