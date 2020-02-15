@@ -105,6 +105,6 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
             if i % log_steps == 0 and i > 0:
                 print('Step {}: loss = {}, Time to run {} steps = {}'.format(i, loss, log_steps, time.time() - start))
                 start = time.time()
-        # plt.plot(losses)
+        plt.plot(losses)
         plt.show()
     return model
