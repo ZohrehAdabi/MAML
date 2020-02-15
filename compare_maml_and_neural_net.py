@@ -27,10 +27,10 @@ def compare_maml_and_neural_net(maml, neural_net, sinusoid_generator, num_steps=
     '''
     if intermediate_plot:
         print('MAML')
-    fit_maml, w3_maml_model, weight_gradient_net = eval_sinewave_for_test(maml, sinusoid_generator, plot=intermediate_plot)
+    fit_maml, w3_maml_model, weight_gradient_maml, loss_maml  = eval_sinewave_for_test(maml, sinusoid_generator, plot=intermediate_plot)
     if intermediate_plot:
         print('Neural Net')
-    fit_neural_net, w3_net_model, weight_gradient_maml = eval_sinewave_for_test(neural_net, sinusoid_generator, plot=intermediate_plot)
+    fit_neural_net, w3_net_model, weight_gradient_net, loss_net = eval_sinewave_for_test(neural_net, sinusoid_generator, plot=intermediate_plot)
     
     fit_res = {'MAML': fit_maml, 'Neural Net': fit_neural_net}
     
@@ -51,4 +51,4 @@ def compare_maml_and_neural_net(maml, neural_net, sinusoid_generator, num_steps=
         legend.append(name)
     ax.legend(legend)
     plt.show()
-    return w3_maml_model, w3_net_model, weight_gradient_net, weight_gradient_maml
+    return w3_maml_model, w3_net_model, weight_gradient_net, weight_gradient_maml, loss_net, loss_maml

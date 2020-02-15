@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 plt.style.use(['dark_background'])
 import matplotlib as mpl
 
-colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen'}
+colors = {0:'dodgerblue' , 1: 'tomato' , 2:'forestgreen', 3:'cyan', 4:'yellow' }
 
-def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10), lr=0.01, plot=True):
+def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10, 50, 100), lr=0.01, plot=True):
     '''Evaluates how the sinewave addapts at dataset.
     
     The idea is to use the pretrained model as a weight initializer and
@@ -46,7 +46,7 @@ def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10),
     optimizer = keras.optimizers.SGD(learning_rate=lr)
     
     # run training and log fit results
-    fit_res, w3_copied_model, weight_gradient = eval_sine_test(copied_model, optimizer, x, y, x_test, y_test, num_steps)
+    fit_res, w3_copied_model, weight_gradient, loss_finetune = eval_sine_test(copied_model, optimizer, x, y, x_test, y_test, num_steps)
     
     # plot
     fig = plt.figure(figsize=(12, 5), tight_layout=True)
@@ -60,11 +60,12 @@ def eval_sinewave_for_test(model, sinusoid_generator=None, num_steps=(0, 1, 10),
         cur, = ax.plot(x_test, res[:, 0], '--', color=colors[i] )
         plots.append(cur)
         legend.append(f'After {n} Steps')
-        i +=1%3
+        i +=1
+        
     ax.legend(plots, legend)
     ax.set_ylim(-5, 5)
     ax.set_xlim(-6, 6)
     if plot:
         plt.show()
     
-    return fit_res, w3_copied_model, weight_gradient
+    return fit_res, w3_copied_model, weight_gradient, loss_finetune

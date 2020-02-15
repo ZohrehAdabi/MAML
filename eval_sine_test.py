@@ -59,8 +59,9 @@ def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10))
         fit_res.append((0, logits, loss))
         w3_copied_model.append(model.out.get_weights()[0])
     weight_gradient = {}  
+    loss_finetune = {}
     for step in range(1, np.max(num_steps) + 1):
-        _, gradients = train_batch(x, y, model, optimizer)
+        loss_, gradients = train_batch(x, y, model, optimizer)
         loss, logits = compute_loss(model, tensor_x_test, tensor_y_test)
         if step in num_steps:
             fit_res.append(
@@ -72,5 +73,6 @@ def eval_sine_test(model, optimizer, x, y, x_test, y_test, num_steps=(0, 1, 10))
             )
             w3_copied_model.append(model.out.get_weights()[0])
             weight_gradient[f'step{step}'] = gradients
-    return fit_res, w3_copied_model, weight_gradient
+            loss_finetune[f'step{step}'] = loss_
+    return fit_res, w3_copied_model, weight_gradient, loss_finetune
 
