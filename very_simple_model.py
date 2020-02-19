@@ -1,7 +1,7 @@
 
 from tensorflow import keras
-import numpy as np
-
+# import tensorflow.keras.backend  as K
+import tensorflow as tf
 class SimpleSineModel(keras.Model):
     def __init__(self):
         super(SimpleSineModel, self).__init__()
@@ -9,6 +9,6 @@ class SimpleSineModel(keras.Model):
         self.out = keras.layers.Dense(1)
         
     def call(self, x):
-        x = np.sin(self.hidden1(x))
+        x = tf.sin(self.hidden1(x))
         x = self.out(x)
         return x
