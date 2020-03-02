@@ -52,6 +52,7 @@ def train_model(model, dataset, epochs=1, lr=0.01, log_steps=1000):
         start = time.time()
         for i, sinusoid_generator in enumerate(dataset):
             x, y = sinusoid_generator.batch()
+            model.call(x) # run forward pass to initialize weights???
             # print(type(x))
             loss = train_batch(x, y, model, optimizer)
             inner_loop_loss.append(loss)
