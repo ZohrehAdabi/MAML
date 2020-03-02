@@ -47,12 +47,14 @@ def train_model(model, dataset, epochs=1, lr=0.01, log_steps=1000):
     optimizer = keras.optimizers.Adam(learning_rate=lr)
     for epoch in range(epochs):
         losses = []
+        inner_loop_loss = []
         total_loss = 0
         start = time.time()
         for i, sinusoid_generator in enumerate(dataset):
             x, y = sinusoid_generator.batch()
             # print(type(x))
             loss = train_batch(x, y, model, optimizer)
+            inner_loop_loss.append(loss)
             total_loss += loss
             curr_loss = total_loss / (i + 1.0)
             losses.append(curr_loss)
@@ -68,7 +70,7 @@ def train_model(model, dataset, epochs=1, lr=0.01, log_steps=1000):
         ax.set_title('Loss Vs Time steps')
         plt.show()
         # print(losses)
-    return model
+    return model, losses, inner_loop_loss
 
 def train_model_shuffled(model, dataset, epochs=1, lr=0.01, log_steps=1000):
     # model = SineModel()
