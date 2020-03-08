@@ -71,8 +71,8 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
     for _ in range(epochs):
         total_loss = 0
         losses = []
-        inner_loop__losses = []
-        outer_loop__losses = []
+        inner_loop_loss = []
+        outer_loop_loss = []
         start = time.time()
         # Step 3 and 4
         for i, t in enumerate(random.sample(dataset, len(dataset))):
@@ -83,7 +83,7 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
                 # Step 5
                 with tf.GradientTape() as train_tape:
                     train_loss, _ = compute_loss(model, x[0:5], y[0:5])
-                inner_loop__losses.append(train_loss)    
+                inner_loop_loss.append(train_loss.numpy())    
                 # Step 6
                 gradients = train_tape.gradient(train_loss, model.trainable_variables)
                 k = 0
@@ -96,7 +96,7 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
                     k += 2
                 # Step 8
                 test_loss, logits = compute_loss(model_copy, x[5:], y[5:])
-            outer_loop__losses.append(test_loss)
+            outer_loop_loss.append(test_loss.numpy())
             # Step 8
             gradients = test_tape.gradient(test_loss, model.trainable_variables)
             optimizer.apply_gradients(zip(gradients, model.trainable_variables))
@@ -111,4 +111,4 @@ def train_maml(model, epochs, dataset, lr_inner=0.01, batch_size=1, log_steps=10
                 start = time.time()
         plt.plot(losses)
         plt.show()
-    return model, losses, inner_loop__losses, outer_loop__losses
+    return model, losses, inner_loop_loss, outer_loop_loss

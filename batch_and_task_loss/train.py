@@ -55,11 +55,13 @@ def train_model(model, dataset, epochs=1, lr=0.01, log_steps=1000):
             model.call(x) # run forward pass to initialize weights???
             # print(type(x))
             loss = train_batch(x, y, model, optimizer)
-            inner_loop_loss.append(loss)
+            inner_loop_loss.append(loss.numpy())
+            # print(f'len loss : {loss.numpy().shape}')
+            # print(f'inner_loop_loss:  {loss.numpy()}')
             total_loss += loss
             curr_loss = total_loss / (i + 1.0)
-            losses.append(curr_loss)
-           
+            losses.append(curr_loss.numpy())
+            # print(f'curr_loss:  {curr_loss.numpy()}')
             
             if i % log_steps == 0 and i >= 0:
                 print('Step {}: loss = {}, Time to run {} steps = {:.2f} seconds'.format(
